@@ -23,12 +23,11 @@ namespace SWQ_Project.Services
             var words = completeContactModel.CompleteContact.Split(' ');
 
             //Get Salutation
-            string jsonString = File.ReadAllText("JSONs/Salutations.json");
+            var jsonString = File.ReadAllText("JSONs/Salutations.json");
             var salutations = JsonSerializer.Deserialize<List<SalutationModel>>(jsonString);
             var salutation = GetSalutation(salutations, words[0]);
-            Gender gender = Gender.Unknown;
-            string letterSalutation = salutation.LetterSalutation;
-            gender = ParseGender(salutation.Gender);
+            var letterSalutation = salutation.LetterSalutation;
+            var gender = ParseGender(salutation.Gender);
 
             // Get Lastname
             jsonString = File.ReadAllText("JSONs/Prefix.json");
@@ -50,13 +49,13 @@ namespace SWQ_Project.Services
             {
                 lastnameRemoved = completeContactModel.CompleteContact.Remove(completeContactModel.CompleteContact.Length - lastname.Length );
             }
-            string salutationRemoved = lastnameRemoved;
+            var salutationRemoved = lastnameRemoved;
             if (salutation.Salutation != string.Empty)
             {
-                int place = salutationRemoved.IndexOf(words[0]);
+                int place = salutationRemoved.IndexOf(words[0], StringComparison.Ordinal);
                 salutationRemoved = salutationRemoved.Remove(place, words[0].Length).Insert(place, "");
             }
-            string titleRemoved = salutationRemoved;
+            var titleRemoved = salutationRemoved;
             if (allTitle != string.Empty)
             {
                 titleRemoved = salutationRemoved.Replace(allTitle, "", true, CultureInfo.CurrentCulture);
@@ -78,30 +77,12 @@ namespace SWQ_Project.Services
         }
 
         /// <summary>
-        /// Parse gender string to gender enum.
-        /// </summary>
-        /// <param name="gender">Gender string</param>
-        /// <returns>gender enum</returns>
-        private Gender ParseGender(string gender)
-        {
-            switch (gender)
-            {
-                case "Male":
-                    return Gender.Male;
-                case "Female":
-                    return Gender.Female;
-                default:
-                    return Gender.Unknown;
-            }
-        }
-
-        /// <summary>
         /// Add new Salutation to JSON
         /// </summary>
         /// <param name="model">Salutation to add</param>
         public bool CreateSalutation(SalutationModel model)
         {
-            string jsonString = File.ReadAllText("JSONs/Salutations.json");
+            var jsonString = File.ReadAllText("JSONs/Salutations.json");
             var salutations = JsonSerializer.Deserialize<List<SalutationModel>>(jsonString);
             if (String.IsNullOrEmpty(model.LetterSalutation))
             {
@@ -131,7 +112,7 @@ namespace SWQ_Project.Services
         /// <returns></returns>
         public bool CreateTitle(string toAdd)
         {
-            string jsonString = File.ReadAllText("JSONs/Title.json");
+            var jsonString = File.ReadAllText("JSONs/Title.json");
             var titles = JsonSerializer.Deserialize<List<string>>(jsonString);
             if (String.IsNullOrEmpty(toAdd))
             {
@@ -148,6 +129,24 @@ namespace SWQ_Project.Services
             jsonString = JsonSerializer.Serialize(titles);
             File.WriteAllText("JSONs/Title.json", jsonString);
             return true;
+        }
+        
+        /// <summary>
+        /// Parse gender string to gender enum.
+        /// </summary>
+        /// <param name="gender">Gender string</param>
+        /// <returns>gender enum</returns>
+        private Gender ParseGender(string gender)
+        {
+            switch (gender)
+            {
+                case "Male":
+                    return Gender.Male;
+                case "Female":
+                    return Gender.Female;
+                default:
+                    return Gender.Unknown;
+            }
         }
 
         /// <summary>
@@ -183,8 +182,9 @@ namespace SWQ_Project.Services
         /// </summary>
         /// <param name="letterTitleJsonString">All valid salutaion titles.</param>
         /// <param name="title">All titles of inputted string.</param>
+        /// <param name="gender">Gender of person.</param>
         /// <returns>Salutation title and optional gender, if gender was unknown and title gives a hint to the gender.</returns>
-        public (SalutationTitleModel, Gender) GetSalutationTitle(string letterTitleJsonString, string title, Gender gender)
+        private (SalutationTitleModel, Gender) GetSalutationTitle(string letterTitleJsonString, string title, Gender gender)
         {
             var titles = JsonSerializer.Deserialize<List<SalutationTitleModel>>(letterTitleJsonString);
 
@@ -194,7 +194,7 @@ namespace SWQ_Project.Services
                 {
                     if (title.ToLower().Contains(salutationTitle.Title.ToLower()))
                     {
-                        if (gender == Gender.Unknown && salutationTitle.Gender != Gender.Unknown.ToString())
+                        if (salutationTitle.Gender != Gender.Unknown.ToString())
                             gender = ParseGender(salutationTitle.Gender);
                         return (salutationTitle, gender);
                     }
@@ -224,8 +224,8 @@ namespace SWQ_Project.Services
             //validate titles
             var contactTemp = completeContact;
             var allTitles = JsonSerializer.Deserialize<List<string>>(titleJsonString);
-            List<string> titleList = new List<string>();
-            foreach (string t in allTitles)
+            var titleList = new List<string>();
+            foreach (var t in allTitles)
             {
                 if (contactTemp.ToLower().Contains(t.ToLower()))
                 {
@@ -235,17 +235,17 @@ namespace SWQ_Project.Services
             }
 
             //reorder validated titles
-            List<int> orderIndex = new List<int>();
+            var orderIndex = new List<int>();
             foreach (var tempTitle in titleList)
             {
-                orderIndex.Add(completeContact.IndexOf(tempTitle));
+                orderIndex.Add(completeContact.IndexOf(tempTitle, StringComparison.Ordinal));
             }
-            int next = -1;
-            List<string> titleInOrder = new List<string>();
-            foreach (int z in orderIndex)
+            var next = -1;
+            var titleInOrder = new List<string>();
+            foreach (int _ in orderIndex)
             {
-                int temp = int.MaxValue;
-                for (int index = 0; index < titleList.Count; index++)
+                var temp = int.MaxValue;
+                for (var index = 0; index < titleList.Count; index++)
                 {
                     if (orderIndex[index] < temp)
                     {
@@ -258,8 +258,8 @@ namespace SWQ_Project.Services
             }
 
             //output in right order
-            string title = "";
-            foreach (string t in titleInOrder)
+            var title = "";
+            foreach (var t in titleInOrder)
             {
                 if (title.Count() != 0)
                     title += " " + t;
