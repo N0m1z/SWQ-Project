@@ -25,7 +25,7 @@ namespace SWQ_Project.Controllers
             {
                 response = _contactSpillter.Split(model);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest("Please enter name in valid format");
             }

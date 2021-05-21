@@ -90,10 +90,8 @@ namespace SWQ_Project.Services
             {
                 case "Male":
                     return Gender.Male;
-                    break;
                 case "Female":
                     return Gender.Female;
-                    break;
                 default:
                     return Gender.Unknown;
             }
