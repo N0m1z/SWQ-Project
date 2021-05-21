@@ -1,0 +1,58 @@
+<mat-card class="outputCard" *ngIf="this.salutationService.salutIsForm">
+    <mat-card-content>
+        <form [formGroup]="salutationForm">
+            <h2>Letter Salutation:</h2>
+            <div class="row">
+                <button mat-button color="primary" (click)="copyLetterSal()">copy</button>
+                <div class="fullLetterSalutation">{{this.letterSalutation}}</div>
+            </div>
+
+            <div class="inputCollum">
+                <mat-form-field>
+                    <input matInput placeholder="letter salutation" formControlName="letterSalutation" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="firstname" formControlName="firstname" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="lastname" formControlName="lastname" required>
+                </mat-form-field>
+            </div>
+
+            <h2>Additional Information</h2>
+            <mat-card-subtitle>A change on the additional information wont have an effect on the Letter Salutation
+            </mat-card-subtitle>
+            <div class="inputCollum">
+                <mat-form-field>
+                    <input matInput placeholder="salutation" formControlName="salutation" required>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>language</mat-label>
+                    <mat-select formControlName="language">
+                        <mat-option [value]="0">german</mat-option>
+                        <mat-option [value]="1">french</mat-option>
+                        <mat-option [value]="2">english</mat-option>
+                        <mat-option [value]="3">spanish</mat-option>
+                        <mat-option [value]="4">italian</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option [value]="0">Men</mat-option>
+                        <mat-option [value]="1">Woman</mat-option>
+                        <mat-option [value]="2">Unknown</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput placeholder="all title" formControlName="title">
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

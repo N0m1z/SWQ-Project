@@ -1,0 +1,37 @@
+.mat-form-field {
+  margin: 5px;
+}
+
+.outputSalutation {
+  display: flex;
+  flex-direction: row;
+  margin: 5px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.inputRow {
+  margin: 5px;
+}
+
+h2 {
+  margin-bottom: 2px;
+  margin-left: 10px;
+}
+
+.mat-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.fullLetterSalutation {
+  margin: 5px;
+  font-size: large;
+}

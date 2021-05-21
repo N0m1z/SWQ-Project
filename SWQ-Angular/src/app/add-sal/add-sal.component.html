@@ -1,0 +1,55 @@
+<mat-card class="inputCard">
+    <mat-card-header>
+        <mat-card-title>Add Salutation</mat-card-title>
+        <mat-card-subtitle>enter your Salutation you want to add</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="newSalutation" class="formSal">
+
+            <div class="container">
+                <mat-form-field>
+                    <mat-label>letter salutation</mat-label>
+                    <input matInput formControlName="letterSalutation" required>
+                    <mat-error *ngIf="newSalutation.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="container">
+                <mat-form-field>
+                    <mat-label>salutation</mat-label>
+                    <input matInput formControlName="salutation">
+                </mat-form-field>
+            </div>
+
+            <div class="container">
+                <mat-form-field>
+                    <mat-label>gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option value="0">Men</mat-option>
+                        <mat-option value="1">Woman</mat-option>
+                        <mat-option value="2">Unknown</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="container">
+                <mat-form-field>
+                    <mat-label>language</mat-label>
+                    <mat-select formControlName="language">
+                        <mat-option value="german">german</mat-option>
+                        <mat-option value="french">french</mat-option>
+                        <mat-option value="english">english</mat-option>
+                        <mat-option value="spain">spanish</mat-option>
+                        <mat-option value="italian">italian</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </form>
+    </mat-card-content>
+    <div class="container">
+        <button mat-raised-button color="primary" [disabled]="(newSalutation.get('letterSalutation').invalid)"
+            (click)="addSalutation()">add
+            salutation</button>
+    </div>
+</mat-card>
