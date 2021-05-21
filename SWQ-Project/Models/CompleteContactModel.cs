@@ -7,7 +7,5 @@
         {
             CompleteContact = completeContact;
         }
-
-        public CompleteContactModel() { }
     }
 }
