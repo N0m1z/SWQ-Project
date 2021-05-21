@@ -1,7 +1,6 @@
 ﻿using NUnit.Framework;
 using SWQ_Project.Models;
 using SWQ_Project.Services;
-using SWQ_Project.Controllers;
 
 namespace SWQ_Project_Test
 {
