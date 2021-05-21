@@ -55,7 +55,8 @@ namespace SWQ_Project.Services
             string salutationRemoved = lastnameRemoved;
             if (salutation.Salutation != string.Empty)
             {
-                salutationRemoved = lastnameRemoved.Replace(words[0], "", true, CultureInfo.CurrentCulture);
+                int place = salutationRemoved.IndexOf(words[0]);
+                salutationRemoved = salutationRemoved.Remove(place, words[0].Length).Insert(place, "");
             }
             string titleRemoved = salutationRemoved;
             if (allTitle != string.Empty)
